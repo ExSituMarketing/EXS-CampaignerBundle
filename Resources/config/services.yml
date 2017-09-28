@@ -1,0 +1,7 @@
+services:
+    exs_campaigner.contact_manager:
+        class: 'EXS\CampaignerBundle\Service\ContactManager'
+        arguments:
+            - '%exs_campaigner.wsdl.contact_management%'
+            - '%exs_campaigner.username%'
+            - '%exs_campaigner.password%'

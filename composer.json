@@ -1,0 +1,30 @@
+{
+    "name": "exs/campaigner-bundle",
+    "type": "symfony-bundle",
+    "description": "This bundle is a client ofr Campaigner's SOAP web services.",
+    "keywords": ["Symfony2", "bundle", "campaigner", "soap", "api"],
+    "homepage": "https://github.com/ExSituMarketing/CampaignerBundle",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Ex-Situ Marketing",
+            "email": "dev@ex-situ.com"
+        }
+    ],
+    "require": {
+        "php": "~5.5|~7.0",
+        "ext-soap": "*",
+        "symfony/framework-bundle": "~2.8|~3.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.8"
+    },
+    "autoload": {
+        "psr-4": { "EXS\\CampaignerBundle\\": "" }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
