@@ -102,7 +102,7 @@ class ContactManager extends AbstractSoapClient
      * @param array $contactKeys
      * @param bool  $includeStaticAttributes
      * @param bool  $includeCustomAttributes
-     * @param bool  $includeCustomAttributes
+     * @param bool  $includeSystemAttributes
      * @param bool  $includeGroupMembershipsAttributes
      *
      * @return mixed|null
@@ -111,7 +111,7 @@ class ContactManager extends AbstractSoapClient
         array $contactKeys,
         $includeStaticAttributes = false,
         $includeCustomAttributes = false,
-        $includeCustomAttributes = false,
+        $includeSystemAttributes = false,
         $includeGroupMembershipsAttributes = false
     ) {
         $contactKeys = $this->validateContactKeys($contactKeys);
@@ -125,7 +125,7 @@ class ContactManager extends AbstractSoapClient
             'contactInformationFilter' => [
                 'IncludeStaticAttributes' => (bool)$includeStaticAttributes,
                 'IncludeCustomAttributes' => (bool)$includeCustomAttributes,
-                'IncludeSystemAttributes' => (bool)$includeCustomAttributes,
+                'IncludeSystemAttributes' => (bool)$includeSystemAttributes,
                 'IncludeGroupMembershipsAttributes' => (bool)$includeGroupMembershipsAttributes,
             ]
         ]);

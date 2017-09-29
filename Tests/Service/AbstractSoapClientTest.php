@@ -59,8 +59,44 @@ class AbstractSoapClientTest extends \PHPUnit_Framework_TestCase
                 ],
                 null,
                 null,
+                &$responseHeaders
+            ], 'result' => $soapResult],
+            ['method' => '__soapCall', 'parameters' => [
+                'SomeMethod',
+                [
+                    'SomeMethod' => [
+                        'authentication' => [
+                            'Username' => 'user',
+                            'Password' => 'pass',
+                        ],
+                        'foo' => 123,
+                        'bar' => 'baz',
+                    ]
+                ],
+                null,
+                null,
                 $responseHeaders
-            ], 'result' => []],
+            ], 'result' => new \SoapFault('Receiver', 'It is all broken!')],
+            ['method' => '__soapCall', 'parameters' => [
+                'SomeMethod',
+                [
+                    'SomeMethod' => [
+                        'authentication' => [
+                            'Username' => 'user',
+                            'Password' => 'pass',
+                        ],
+                        'foo' => 123,
+                        'bar' => 'baz',
+                    ]
+                ],
+                null,
+                null,
+                $responseHeaders
+            ], 'result' => function () use (&$responseHeaders) {
+                $responseHeaders['ResponseHeader']['ErrorFlag'] = false;
+
+                return [];
+            }],
         ]);
 
         $client = new EmptyClient('https://ws.campaigner.com/2013/01/contactmanagement.asmx?WSDL', 'user', 'pass');
@@ -75,7 +111,12 @@ class AbstractSoapClientTest extends \PHPUnit_Framework_TestCase
         $method->setAccessible(true);
 
         $result = $method->invokeArgs($client, ['SomeMethod', ['foo' => 123, 'bar' => 'baz']]);
+        $this->assertEquals(['test' => 123], $result);
 
+        $result = $method->invokeArgs($client, ['SomeMethod', ['foo' => 123, 'bar' => 'baz']]);
+        $this->assertNull($result);
+
+        $result = $method->invokeArgs($client, ['SomeMethod', ['foo' => 123, 'bar' => 'baz']]);
         $this->assertNull($result);
     }
 }

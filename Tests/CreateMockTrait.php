@@ -64,8 +64,16 @@ trait CreateMockTrait
             if (isset($call['result'])) {
                 if ('__self' === $call['result']) {
                     $mockCall->will($this->returnValue($mock));
-                } elseif ($call['result'] instanceof \Exception) {
+                } elseif (
+                    ($call['result'] instanceof \Exception)
+                    && (isset($call['throw']))
+                    && (true === $call['throw'])
+                ) {
                     $mockCall->will($this->throwException($call['result']));
+                } elseif (is_callable($call['result'])) {
+                    $result = call_user_func_array($call['result'], $call['parameters']);
+                    var_dump($result);
+                    $mockCall->will($this->returnValue($result));
                 } else {
                     $mockCall->will($this->returnValue($call['result']));
                 }
