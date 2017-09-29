@@ -85,8 +85,6 @@ abstract class AbstractSoapClient
             return $result;
         }
 
-        var_dump($responseHeaders);
-
         /* Transform a \stdClass object to an associative array. */
         $responseHeaders = json_decode(json_encode($responseHeaders), true);
 
