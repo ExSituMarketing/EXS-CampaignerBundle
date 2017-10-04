@@ -15,6 +15,7 @@ class ContactManager extends AbstractSoapClient
 {
     /**
      * This web method adds a custom contact attribute, or updates a default or custom contact attribute for all contacts.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 27
      *
      * @param int    $attributeId
      * @param string $attributeName
@@ -47,6 +48,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method deletes an existing custom attribute.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 30
      *
      * @param int $id
      *
@@ -61,6 +63,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method deletes one or more specified contacts.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 32
      *
      * @param array $contactKeys
      *
@@ -76,6 +79,7 @@ class ContactManager extends AbstractSoapClient
     /**
      * This web method returns various untyped reports based on the contacts obtained using the
      * RunReport web method, as described in "RunReport Web Method".
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 34
      *
      * @param string $reportTicketId
      * @param int    $fromRow
@@ -114,6 +118,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method returns information about attributes for up to 1000 specified contacts.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 37
      *
      * @param array $contactKeys
      * @param bool  $includeStaticAttributes
@@ -143,6 +148,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method synchronously adds contacts and defines their information, or updates information for existing contacts for up to 1000 contacts.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 53
      *
      * @param bool  $updateExistingContacts
      * @param bool  $triggerWorkflow
@@ -178,6 +184,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method lists all contact attributes and their properties (such as the identifier and type).
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 67
      *
      * @param bool $includeAllDefaultAttributes
      * @param bool $includeAllCustomAttributes
@@ -199,6 +206,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method lists all contact fields and their properties (such as the identifier and type).
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 71
      *
      * @param bool $includeAllDefaultAttributes
      * @param bool $includeAllCustomAttributes
@@ -220,6 +228,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method changes one contact's status from Unsubscribed to Subscribed, HardBounce, SoftBounce, or Pending.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 78
      *
      * @param int    $contactId
      * @param string $contactUniqueIdentifier
@@ -241,6 +250,7 @@ class ContactManager extends AbstractSoapClient
     /**
      * This web method processes an XML query string to obtain rows of contact information, which are then stored on Campaigner®.
      * The web method also returns a ticket ID for the query request and the number of rows obtained.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 82
      *
      * @param $xmlContactQuery
      *
@@ -260,6 +270,7 @@ class ContactManager extends AbstractSoapClient
     /**
      * Like ImmediateUpload, the UploadMassContacts web method uploads contact information for multiple contacts at the same time to Campaigner®,
      * and performs additional processing, such as changing group memberships for contacts being uploaded.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 85
      *
      * @param bool $updateExistingContacts
      * @param bool  $triggerWorkflow
@@ -310,6 +321,8 @@ class ContactManager extends AbstractSoapClient
     }
 
     /**
+     * Validates "ContactUniqueIdentifier" request node.
+     *
      * @param array $contactKey
      *
      * @return array
@@ -334,7 +347,7 @@ class ContactManager extends AbstractSoapClient
     }
 
     /**
-     *
+     * Validates "contactData" request node.
      *
      * @param array $contactData
      *
@@ -407,6 +420,8 @@ class ContactManager extends AbstractSoapClient
     }
 
     /**
+     * Validates "Status" request value.
+     *
      * @param string $status
      *
      * @return string
@@ -429,6 +444,8 @@ class ContactManager extends AbstractSoapClient
     }
 
     /**
+     * Validates "MailFormat" request value.
+     *
      * @param string $mailFormat
      *
      * @return string
