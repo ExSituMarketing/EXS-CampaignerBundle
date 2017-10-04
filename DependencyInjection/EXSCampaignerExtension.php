@@ -28,5 +28,6 @@ class EXSCampaignerExtension extends Extension
         $container->setParameter('exs_campaigner.username', $config['username']);
         $container->setParameter('exs_campaigner.password', $config['password']);
         $container->setParameter('exs_campaigner.wsdl.contact_management', $config['wsdl']['contact_management']);
+        $container->setParameter('exs_campaigner.xsd.contact_search_criteria', $config['xsd']['contacts_search_criteria']);
     }
 }

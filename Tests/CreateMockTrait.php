@@ -51,10 +51,16 @@ trait CreateMockTrait
 
             if (isset($call['parameters'])) {
                 $methodWith = new \ReflectionMethod($mockCall, 'with');
-                $args = is_array($call['parameters']) ? $call['parameters'] : array($call['parameters']);
+
+                if (is_array($call['parameters'])) {
+                    $args = &$call['parameters'];
+                } else {
+                    $args = array($call['parameters']);
+                }
 
                 $that = $this;
-                $args = array_map(function ($arg) use ($that) {
+
+                $args = array_map(function (&$arg) use ($that) {
                     return $that->equalTo($arg);
                 }, $args);
 
@@ -71,9 +77,7 @@ trait CreateMockTrait
                 ) {
                     $mockCall->will($this->throwException($call['result']));
                 } elseif (is_callable($call['result'])) {
-                    $result = call_user_func_array($call['result'], $call['parameters']);
-                    var_dump($result);
-                    $mockCall->will($this->returnValue($result));
+                    $mockCall->will($this->returnValue(call_user_func_array($call['result'], $call['parameters'])));
                 } else {
                     $mockCall->will($this->returnValue($call['result']));
                 }

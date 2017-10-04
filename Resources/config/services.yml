@@ -1,6 +1,14 @@
 services:
+    exs_campaigner.manager_configurator:
+        class: 'EXS\CampaignerBundle\Service\XsdPathConfigurator'
+        public: false
+        arguments:
+            - '@file_locator'
+            - '%exs_campaigner.xsd.contact_search_criteria%'
+
     exs_campaigner.contact_manager:
         class: 'EXS\CampaignerBundle\Service\ContactManager'
+        configurator: ['@exs_campaigner.manager_configurator', 'configure']
         arguments:
             - '%exs_campaigner.wsdl.contact_management%'
             - '%exs_campaigner.username%'

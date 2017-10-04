@@ -59,7 +59,7 @@ class AbstractSoapClientTest extends \PHPUnit_Framework_TestCase
                 ],
                 null,
                 null,
-                &$responseHeaders
+                $responseHeaders
             ], 'result' => $soapResult],
             ['method' => '__soapCall', 'parameters' => [
                 'SomeMethod',

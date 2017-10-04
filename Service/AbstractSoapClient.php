@@ -2,6 +2,8 @@
 
 namespace EXS\CampaignerBundle\Service;
 
+use EXS\CampaignerBundle\Model\ReportResult;
+
 /**
  * Class AbstractSoapClient
  *
@@ -20,6 +22,11 @@ abstract class AbstractSoapClient
     protected $authenticationNode;
 
     /**
+     * @var string
+     */
+    protected $xsdPath;
+
+    /**
      * AbstractSoapClient constructor.
      *
      * @param string $wsdlUrl
@@ -30,8 +37,20 @@ abstract class AbstractSoapClient
     public function __construct($wsdlUrl, $username, $password, array $clientOptions = [])
     {
         $requiredOptions = [
-            'trace' => true, /* So we can have response's headers. */
+            'encoding' => 'UTF-8',
             'exceptions' => false, /* Bad calls won't throw an exception but returns a SoapFault object. */
+            'soap_version' => SOAP_1_1,
+            'trace' => true, /* So we can have response's headers. */
+            'classmap' => [
+                'ReportResult' => ReportResult::class,
+            ],
+            'typemap' => [
+                [
+                    'type_ns' => 'https://ws.campaigner.com/2013/01',
+                    'type_name' => 'ReportResult',
+                    'from_xml' => [$this, 'createReportResultFromXml'],
+                ],
+            ],
         ];
 
         $this->client = new \SoapClient($wsdlUrl, array_merge($clientOptions, $requiredOptions));
@@ -42,6 +61,35 @@ abstract class AbstractSoapClient
                 'Password' => $password,
             ],
         ];
+    }
+
+    /**
+     * @param string $xml
+     *
+     * @return ReportResult
+     */
+    public function createReportResultFromXml($xml)
+    {
+        $xmlElement = new \SimpleXMLElement($xml);
+
+        $reportResultAttributes = (array)$xmlElement->attributes();
+        $reportResultAttributes = current($reportResultAttributes);
+
+        foreach ($xmlElement->getDocNamespaces() as $namespace) {
+            $xmlElement->registerXPathNamespace('c', $namespace);
+        }
+
+        $attributeValues = [];
+        $attributeTags = $xmlElement->xpath('//c:Attribute');
+
+        foreach ($attributeTags as $attributeTag) {
+            $attributeAttributes = (array)$attributeTag->attributes();
+            $attributeAttributes = current($attributeAttributes);
+
+            $attributeValues[$attributeAttributes['Id']] = (string)$attributeTag;
+        }
+
+        return new ReportResult($reportResultAttributes, $attributeValues);
     }
 
     /**
@@ -69,7 +117,7 @@ abstract class AbstractSoapClient
                     $parameters
                 ),
             ],
-            null,
+            [],
             null,
             $responseHeaders
         );
@@ -96,5 +144,35 @@ abstract class AbstractSoapClient
         }
 
         return null;
+    }
+
+    /**
+     * Set xsd file's path.
+     *
+     * @param $xsdPath
+     */
+    public function setXsdPath($xsdPath)
+    {
+        $this->xsdPath = $xsdPath;
+    }
+
+    /**
+     * Validate query against the xsd.
+     *
+     * @param string $query
+     *
+     * @return bool
+     */
+    protected function isValidXmlContactQuery($query)
+    {
+        $queryXml = new \DOMDocument();
+
+        try {
+            $queryXml->loadXML($query);
+
+            return $queryXml->schemaValidate($this->xsdPath);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="contactssearchcriteria">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="version">
+                    <xs:complexType>
+                        <xs:attribute name="major" type="xs:unsignedByte" use="required" />
+                        <xs:attribute name="minor" type="xs:unsignedByte" use="required" />
+                        <xs:attribute name="build" type="xs:unsignedByte" use="required" />
+                        <xs:attribute name="revision" type="xs:unsignedByte" use="required" />
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="accountid" type="xs:unsignedLong" minOccurs="0" />
+                <xs:element name="set" type="setType" default="Partial" minOccurs="1" />
+                <xs:element name="evaluatedefault" minOccurs="0" type="evaluatedefaultType" default="True" />
+                <xs:element name="testContactsOnly" minOccurs="0" type="testContactsOnlyType" default="False" />
+                <xs:element name="group" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                            <xs:element name="relation" type="relationType" minOccurs="0" />
+                            <xs:element name="filter" type="filterType" maxOccurs="unbounded" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="setType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Entire" />
+            <xs:enumeration value="Partial" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="evaluatedefaultType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="True" />
+            <xs:enumeration value="False" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="testContactsOnlyType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="True" />
+            <xs:enumeration value="False" />
+        </xs:restriction>
+    </xs:simpleType>
+    <!--Filter-->
+    <xs:complexType name="filterType">
+        <xs:sequence>
+            <xs:element name="relation" type="relationType" minOccurs="0" />
+            <xs:element name="filtertype" type="filtertypeType" />
+            <!-- email action -->
+            <xs:choice minOccurs="0">
+                <xs:element name="campaign">
+                    <xs:complexType>
+                        <xs:choice minOccurs="1" maxOccurs="1">
+                            <xs:element name="campaignid" type="xs:unsignedLong" />
+                            <xs:element name="anycampaign" type="xs:string" fixed="" />
+                            <xs:element name="campaignrunid" type="xs:unsignedLong" />
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <!-- form submission -->
+                <xs:element name="formid" type="xs:unsignedInt" minOccurs="0" />
+                <!-- search attribute -->
+                <xs:choice minOccurs="0">
+                    <xs:element name="contactattributeid" type="xs:unsignedInt" />
+                    <xs:element name="staticattributeid" type="xs:unsignedInt" />
+                    <xs:element name="systemattributeid" type="xs:unsignedInt" />
+                </xs:choice>
+            </xs:choice>
+            <xs:element name="action">
+                <xs:complexType>
+                    <xs:sequence>
+                        <!-- email action -->
+                        <xs:element name="status" type="statusType" minOccurs="0" />
+                        <!-- form submission, search attribute and grouping -->
+                        <xs:element name="type" type="actiontypeType" minOccurs="0" />
+                        <!-- required -->
+                        <xs:element name="operator" type="actionoperatorType" />
+                        <!-- grouping -->
+                        <xs:element name="groupingid" type="xs:unsignedLong" minOccurs="0" />
+                        <!-- value element is based on operator selection -->
+                        <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="2"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:sequence minOccurs="0" maxOccurs="1">
+                <xs:element name="operator" type="filteroperatorType"/>
+                <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="2"/>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- filter level -->
+    <xs:simpleType name="filtertypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="EmailAction" />
+            <xs:enumeration value="FormSubmission" />
+            <xs:enumeration value="SearchAttributeValue" />
+            <xs:enumeration value="Grouping" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="relationType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="And" />
+            <xs:enumeration value="Or" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="filteroperatorType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="BeforeNHour" />
+            <xs:enumeration value="AfterNHour" />
+            <xs:enumeration value="BetweenHour" />
+            <xs:enumeration value="WithinSpecificTime" />
+            <xs:enumeration value="Anytime" />
+            <xs:enumeration value="PastNDay" />
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- common -->
+    <xs:simpleType name="actionoperatorType">
+        <xs:restriction base="xs:string">
+            <!-- grouping filter-->
+            <xs:enumeration value="BelongTo" />
+            <xs:enumeration value="DoNotBelongTo" />
+            <!-- form submission filter-->
+            <xs:enumeration value="SubscribedOrUpdated" />
+            <xs:enumeration value="Subscribed" />
+            <xs:enumeration value="Updated" />
+            <xs:enumeration value="NotSubscribedOrUpdated" />
+            <xs:enumeration value="DoNotUpdate" />
+            <!-- email action filter -->
+            <xs:enumeration value="Open" />
+            <xs:enumeration value="ClickALink" />
+            <xs:enumeration value="ClickAnyLink" />
+            <xs:enumeration value="ClickAFriendlyNameLink" />
+            <xs:enumeration value="Forward" />
+            <xs:enumeration value="Reply" />
+            <xs:enumeration value="Unsubscribe" />
+            <xs:enumeration value="Sent" />
+            <xs:enumeration value="Receive" />
+            <xs:enumeration value="HardBounce" />
+            <xs:enumeration value="SoftBounce" />
+            <xs:enumeration value="SpamBounce" />
+            <!-- search attribute filter -->
+            <xs:enumeration value="EqualTo" />
+            <xs:enumeration value="NotEqualTo" />
+            <xs:enumeration value="NotEqualToOrNull" />
+            <xs:enumeration value="LessThan" />
+            <xs:enumeration value="GreaterThan" />
+            <xs:enumeration value="GreaterThanOrEqualTo" />
+            <xs:enumeration value="LessThanOrEqualTo" />
+            <xs:enumeration value="Between" />
+            <xs:enumeration value="Today" />
+            <xs:enumeration value="WithinLastNDays" />
+            <xs:enumeration value="WithinNextNDays" />
+            <xs:enumeration value="EqualToLastNDays" />
+            <xs:enumeration value="EqualToNextNDays" />
+            <xs:enumeration value="Empty" />
+            <xs:enumeration value="NotEmpty" />
+            <xs:enumeration value="ThisMonth" />
+            <xs:enumeration value="WithinLastNMonths" />
+            <xs:enumeration value="WithinNextNMonths" />
+            <xs:enumeration value="EqualToLastNMonths" />
+            <xs:enumeration value="EqualToNextNMonths" />
+            <xs:enumeration value="Now" />
+            <xs:enumeration value="WithinLastNHours" />
+            <xs:enumeration value="WithinNextNHours" />
+            <xs:enumeration value="EqualToLastNHours" />
+            <xs:enumeration value="EqualToNextNHours" />
+            <xs:enumeration value="Containing" />
+            <xs:enumeration value="NotContaining" />
+            <xs:enumeration value="NotContainingOrNull" />
+            <xs:enumeration value="StartingWith" />
+            <xs:enumeration value="EndingWith" />
+            <xs:enumeration value="IsOneOf" />
+            <xs:enumeration value="IsNotOneOf" />
+            <xs:enumeration value="BeforeToday" />
+            <xs:enumeration value="AfterToday" />
+            <xs:enumeration value="NDaysBeforeToday" />
+            <xs:enumeration value="NDaysAfterToday" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="actiontypeType">
+        <xs:restriction base="xs:string">
+            <!-- grouping filter-->
+            <xs:enumeration value="Mailing" />
+            <xs:enumeration value="Static" />
+            <xs:enumeration value="Dynamic" />
+            <xs:enumeration value="Custom" />
+            <xs:enumeration value="AnyMailing" />
+            <!-- search attribute filter -->
+            <xs:enumeration value="DD" />
+            <xs:enumeration value="DDMM" />
+            <xs:enumeration value="DDMMYY" />
+            <xs:enumeration value="MMYY" />
+            <xs:enumeration value="MM" />
+            <xs:enumeration value="YY" />
+            <xs:enumeration value="TT" />
+            <xs:enumeration value="TTDD" />
+            <xs:enumeration value="TTDDMM" />
+            <xs:enumeration value="TTDDMMYY" />
+            <xs:enumeration value="Numeric" />
+            <xs:enumeration value="Text" />
+            <xs:enumeration value="Boolean" />
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- email action filter-->
+    <xs:simpleType name="statusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Do" />
+            <xs:enumeration value="DoNot" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
