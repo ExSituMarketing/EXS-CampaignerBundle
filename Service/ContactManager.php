@@ -136,13 +136,45 @@ class ContactManager extends AbstractSoapClient
         $includeGroupMembershipsAttributes = false
     ) {
         return $this->callMethod(__FUNCTION__, [
-            'contactKeys' => $this->validateContactKeys($contactKeys),
+            'contactFilter' => [
+                'ContactKeys' => $this->validateContactKeys($contactKeys),
+            ],
             'contactInformationFilter' => [
                 'IncludeStaticAttributes' => (bool)$includeStaticAttributes,
                 'IncludeCustomAttributes' => (bool)$includeCustomAttributes,
                 'IncludeSystemAttributes' => (bool)$includeSystemAttributes,
                 'IncludeGroupMembershipsAttributes' => (bool)$includeGroupMembershipsAttributes,
             ]
+        ]);
+    }
+
+    /**
+     * This web method returns the results from uploaded contacts for a request initiated by UploadMassContacts.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 45
+     *
+     * @param int $uploadTicketId
+     *
+     * @return mixed|null
+     */
+    public function GetUploadMassContactsResult($uploadTicketId)
+    {
+        return $this->callMethod(__FUNCTION__, [
+            'uploadTicketId' => $uploadTicketId,
+        ]);
+    }
+
+    /**
+     * This web method returns the current status for an upload request initiated by the UploadMassContacts web method.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 49
+     *
+     * @param $uploadTicketId
+     *
+     * @return array|bool|null
+     */
+    public function GetUploadMassContactsStatus($uploadTicketId)
+    {
+        return $this->callMethod(__FUNCTION__, [
+            'uploadTicketId' => $uploadTicketId,
         ]);
     }
 
@@ -183,6 +215,31 @@ class ContactManager extends AbstractSoapClient
     }
 
     /**
+     * The InitiateDoubleOptIn web method is used when requests to receive email campaigns are gathered by a custom application or interface, instead of a Campaigner® sign up form.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 63
+     *
+     * @param array  $contactKeys
+     * @param string $xmlContactQuery
+     * @param int    $formId
+     *
+     * @return mixed|null
+     */
+    public function InitiateDoubleOptIn(array $contactKeys, $xmlContactQuery, $formId)
+    {
+        if (false === $this->isValidXmlContactQuery($xmlContactQuery)) {
+            return null;
+        }
+
+        return $this->callMethod(__FUNCTION__, [
+            'contactFilter' => [
+                'ContactKeys' => $this->validateContactKeys($contactKeys),
+                'xmlContactQuery' => $xmlContactQuery,
+            ],
+            'formId' => $formId,
+        ]);
+    }
+
+    /**
      * This web method lists all contact attributes and their properties (such as the identifier and type).
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 67
      *
@@ -198,9 +255,11 @@ class ContactManager extends AbstractSoapClient
         $includeAllSystemAttributes = true
     ) {
         return $this->callMethod(__FUNCTION__, [
-            'IncludeAllDefaultAttributes' => $includeAllDefaultAttributes,
-            'IncludeAllCustomAttributes' => $includeAllCustomAttributes,
-            'IncludeAllSystemAttributes' => $includeAllSystemAttributes,
+            'filter' => [
+                'IncludeAllDefaultAttributes' => $includeAllDefaultAttributes,
+                'IncludeAllCustomAttributes' => $includeAllCustomAttributes,
+                'IncludeAllSystemAttributes' => $includeAllSystemAttributes,
+            ],
         ]);
     }
 
@@ -220,9 +279,26 @@ class ContactManager extends AbstractSoapClient
         $includeAllSystemAttributes = true
     ) {
         return $this->callMethod(__FUNCTION__, [
-            'IncludeAllDefaultAttributes' => $includeAllDefaultAttributes,
-            'IncludeAllCustomAttributes' => $includeAllCustomAttributes,
-            'IncludeAllSystemAttributes' => $includeAllSystemAttributes,
+            'filter' => [
+                'IncludeAllDefaultAttributes' => $includeAllDefaultAttributes,
+                'IncludeAllCustomAttributes' => $includeAllCustomAttributes,
+                'IncludeAllSystemAttributes' => $includeAllSystemAttributes,
+            ],
+        ]);
+    }
+
+    /**
+     * This web method lists the top 5000 test contacts associated with an account. You can specify a value to limit results.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 75
+     *
+     * @param int $contactCount
+     *
+     * @return mixed|null
+     */
+    public function ListTestContacts($contactCount)
+    {
+        return $this->callMethod(__FUNCTION__, [
+            'contactCount' => $contactCount,
         ]);
     }
 
@@ -252,7 +328,7 @@ class ContactManager extends AbstractSoapClient
      * The web method also returns a ticket ID for the query request and the number of rows obtained.
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 82
      *
-     * @param $xmlContactQuery
+     * @param string $xmlContactQuery
      *
      * @return mixed|null
      */
@@ -390,7 +466,7 @@ class ContactManager extends AbstractSoapClient
 
         $validatedContactData['Status'] = isset($contactData['Status']) ? $this->validateStatus($contactData['Status']) : null;
 
-        $validatedContactData['MailFormat'] = isset($contactData['MailFormat']) ? $this->validateMailFormat($contactData['MailFormat']) : null;
+        $validatedContactData['MailFormat'] = isset($contactData['MailFormat']) ? $this->validateFormat($contactData['MailFormat']) : null;
 
         $validatedContactData['IsTestContact'] = isset($contactData['IsTestContact']) ? (bool)$contactData['IsTestContact'] : null;
 
@@ -441,27 +517,5 @@ class ContactManager extends AbstractSoapClient
         }
 
         return $status;
-    }
-
-    /**
-     * Validates "MailFormat" request value.
-     *
-     * @param string $mailFormat
-     *
-     * @return string
-     */
-    private function validateMailFormat($mailFormat)
-    {
-        $mailFormats = [
-            'Text',
-            'HTML',
-            'Both',
-        ];
-
-        if (null === in_array($mailFormat, $mailFormats)) {
-            throw new InvalidConfigurationException(sprintf('Invalid MailFormat "%s".', $mailFormat));
-        }
-
-        return $mailFormat;
     }
 }

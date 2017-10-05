@@ -2,7 +2,6 @@
 
 
 
-
 ## What is this bundle doing ?
 
 This bundle provides Campaigner APIs' as Symfony services.
@@ -51,6 +50,7 @@ exs_campaigner:
     password: 'somepassword'
     wsdl:
         contact_management: 'https://ws.campaigner.com/2013/01/contactmanagement.asmx?WSDL'
+        campaign_management: 'https://ws.campaigner.com/2013/01/campaignmanagement.asmx?WSDL'
     xsd:
         contacts_search_criteria: '@EXSCampaignerBundle/Resources/xsd/ContactsSearchCriteria2.xsd'
 ```
@@ -60,26 +60,45 @@ exs_campaigner:
 * Contact Management Web Service
 
   Service id : `exs_campaigner.contact_manager`
-  
+
   Methods :
   * CreateUpdateAttribute
   * DeleteAttribute
   * DeleteContacts
   * DownloadReport
   * GetContacts
-  * _GetUploadMassContactsResult_ (Not implemented yet)
-  * _GetUploadMassContactsStatus_ (Not implemented yet)
+  * GetUploadMassContactsResult
+  * GetUploadMassContactsStatus
   * ImmediateUpload
-  * _InitiateDoubleOptIn_ (Not implemented yet)
+  * InitiateDoubleOptIn
   * ListAttributes
   * ListContactFields
-  * _ListTestContacts_ (Not implemented yet)
+  * ListTestContacts
   * ResubscribeContact
-  * _ReUploadContactsNV_ (Not implemented yet)
   * RunReport
   * UploadMassContacts
 
-* _Campaign Management Web Service_ (Not implemented yet)
+* Campaign Management Web Service
+
+  Service id : `exs_campaigner.campaign_manager`
+
+  Methods :
+  * CreateUpdateCampaign
+  * _DeleteCampaign_ (Not implemented yet)
+  * _DeleteFromEmail_ (Not implemented yet)
+  * _GetCampaignRunsSummaryReport_ (Not implemented yet)
+  * _GetCampaignSummary_ (Not implemented yet)
+  * _GetTrackedLinkSummaryReport_ (Not implemented yet)
+  * _GetUnsubscribeMessages_ (Not implemented yet)
+  * _ListCampaigns_ (Not implemented yet)
+  * _ListFromEmails_ (Not implemented yet)
+  * _ListTrackedLinksByCampaign_ (Not implemented yet)
+  * _ScheduleCampaign_ (Not implemented yet)
+  * _SendTestCampaign_ (Not implemented yet)
+  * _SetCampaignRecipients_ (Not implemented yet)
+  * _StopCampaign_ (Not implemented yet)
+  * _ValidateFromEmail_ (Not implemented yet)
+
 * _List Management Web Service_ (Not implemented yet)
 * _Content Management Web Service_ (Not implemented yet)
 * _Workflow Management Web Service_ (Not implemented yet)

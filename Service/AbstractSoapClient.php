@@ -3,6 +3,7 @@
 namespace EXS\CampaignerBundle\Service;
 
 use EXS\CampaignerBundle\Model\ReportResult;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * Class AbstractSoapClient
@@ -174,5 +175,35 @@ abstract class AbstractSoapClient
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * Validates mail format value.
+     *
+     * @param string $format
+     *
+     * @return string
+     */
+    protected function validateFormat($format)
+    {
+        if (null === in_array($format, ['Text', 'HTML', 'Both'])) {
+            throw new InvalidConfigurationException(sprintf('Invalid Format "%s".', $format));
+        }
+
+        return $format;
+    }
+
+    /**
+     * @param \DateTime $date
+     *
+     * @return string
+     */
+    protected function getUtcDatetime(\DateTime $date)
+    {
+        if ('UTC' !== $date->getTimezone()->getName()) {
+            $date->setTimezone(new \DateTimeZone('UTC'));
+        }
+
+        return $date->format('Y-m-d\TH:i:s.v\Z');
     }
 }
