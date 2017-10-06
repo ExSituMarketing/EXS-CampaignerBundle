@@ -16,8 +16,15 @@ services:
 
     exs_campaigner.campaign_manager:
         class: 'EXS\CampaignerBundle\Service\CampaignManager'
-        configurator: ['@exs_campaigner.manager_configurator', 'configure']
         arguments:
             - '%exs_campaigner.wsdl.campaign_management%'
+            - '%exs_campaigner.username%'
+            - '%exs_campaigner.password%'
+
+    exs_campaigner.list_manager:
+        class: 'EXS\CampaignerBundle\Service\ListManager'
+        configurator: ['@exs_campaigner.manager_configurator', 'configure']
+        arguments:
+            - '%exs_campaigner.wsdl.list_management%'
             - '%exs_campaigner.username%'
             - '%exs_campaigner.password%'

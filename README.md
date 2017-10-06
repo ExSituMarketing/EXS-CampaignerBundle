@@ -78,28 +78,39 @@ exs_campaigner:
   * RunReport
   * UploadMassContacts
 
+
 * Campaign Management Web Service
 
   Service id : `exs_campaigner.campaign_manager`
 
   Methods :
   * CreateUpdateCampaign
-  * _DeleteCampaign_ (Not implemented yet)
-  * _DeleteFromEmail_ (Not implemented yet)
-  * _GetCampaignRunsSummaryReport_ (Not implemented yet)
-  * _GetCampaignSummary_ (Not implemented yet)
-  * _GetTrackedLinkSummaryReport_ (Not implemented yet)
-  * _GetUnsubscribeMessages_ (Not implemented yet)
-  * _ListCampaigns_ (Not implemented yet)
-  * _ListFromEmails_ (Not implemented yet)
-  * _ListTrackedLinksByCampaign_ (Not implemented yet)
-  * _ScheduleCampaign_ (Not implemented yet)
-  * _SendTestCampaign_ (Not implemented yet)
-  * _SetCampaignRecipients_ (Not implemented yet)
-  * _StopCampaign_ (Not implemented yet)
-  * _ValidateFromEmail_ (Not implemented yet)
+  * DeleteCampaign
+  * DeleteFromEmail
+  * GetCampaignRunsSummaryReport
+  * GetCampaignSummary
+  * GetTrackedLinkSummaryReport
+  * GetUnsubscribeMessages
+  * ListCampaigns
+  * ListFromEmails
+  * ListTrackedLinksByCampaign
+  * ScheduleCampaign
+  * SendTestCampaign
+  * SetCampaignRecipients
+  * StopCampaign
+  * ValidateFromEmail
 
-* _List Management Web Service_ (Not implemented yet)
+
+* List Management Web Service
+
+  Service id : `exs_campaigner.list_manager`
+
+  Methods :
+  * CreateUpdateContactGroups
+  * DeleteContactGroups
+  * ListContactGroups
+  
+  
 * _Content Management Web Service_ (Not implemented yet)
 * _Workflow Management Web Service_ (Not implemented yet)
 * _SMTPService Web Service_ (Not implemented yet)
