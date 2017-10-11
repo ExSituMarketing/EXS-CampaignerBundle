@@ -405,7 +405,7 @@ class ContactManager extends AbstractSoapClient
      */
     private function validateContactKey(array $contactKey)
     {
-        if (false === isset($contactData['ContactUniqueIdentifier'])) {
+        if (false === isset($contactKey['ContactUniqueIdentifier'])) {
             throw new InvalidConfigurationException('Missing "ContactUniqueIdentifier" parameter.');
         }
 

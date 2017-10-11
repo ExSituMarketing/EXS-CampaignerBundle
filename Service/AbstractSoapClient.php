@@ -141,7 +141,9 @@ abstract class AbstractSoapClient
             (true === isset($responseHeaders['ResponseHeader']))
             && (true === isset($responseHeaders['ResponseHeader']['ErrorFlag']))
         ) {
+            // @codeCoverageIgnoreStart
             return !(bool)$responseHeaders['ResponseHeader']['ErrorFlag'];
+            // @codeCoverageIgnoreEnd
         }
 
         return null;
@@ -186,7 +188,7 @@ abstract class AbstractSoapClient
      */
     protected function validateFormat($format)
     {
-        if (null === in_array($format, ['Text', 'HTML', 'Both'])) {
+        if (false === in_array($format, ['Text', 'HTML', 'Both'])) {
             throw new InvalidConfigurationException(sprintf('Invalid Format "%s".', $format));
         }
 
