@@ -130,4 +130,29 @@ class ContentManager extends AbstractSoapClient
     {
         return $this->callMethod(__FUNCTION__);
     }
+
+    /**
+     * This web method uploads one media file to the image library for an account, and returns identifying information (such as file name and the URL) for the media file.
+     * @see docs/Campaigner-Elements-API-User-Guide.pdf page 173
+     *
+     * @param string $localFilename
+     * @param string $targetFilename
+     *
+     * @return array|bool|null
+     */
+    public function UploadMediaFile($localFilename, $targetFilename)
+    {
+        if (
+            (false === file_exists($localFilename))
+            || (false === is_readable($localFilename))
+            || (false === in_array(mime_content_type($localFilename), ['application/pdf', 'image/gif', 'image/jpeg', 'image/png']))
+        ) {
+            throw new \RuntimeException(sprintf('Invalid file "%s".', $localFilename));
+        }
+
+        return $this->callMethod(__FUNCTION__, [
+            'fileName' => $targetFilename,
+            'fileContentBase64' => base64_encode(file_get_contents($localFilename)),
+        ]);
+    }
 }
