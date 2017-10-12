@@ -38,7 +38,7 @@ class WorkflowManager extends AbstractSoapClient
     public function TriggerWorkflow($workflowId, $xmlContactQuery)
     {
         if (false === $this->isValidXmlContactQuery($xmlContactQuery)) {
-            return null;
+            return false;
         }
 
         return $this->callMethod(__FUNCTION__, [

@@ -48,35 +48,19 @@ Complete configuration (with default values) :
 exs_campaigner:
     username: 'someusername'
     password: 'somepassword'
+    # Default values
     wsdl:
-        contact_management: 'https://ws.campaigner.com/2013/01/contactmanagement.asmx?WSDL'
         campaign_management: 'https://ws.campaigner.com/2013/01/campaignmanagement.asmx?WSDL'
+        contact_management: 'https://ws.campaigner.com/2013/01/contactmanagement.asmx?WSDL'
+        content_management: 'https://ws.campaigner.com/2013/01/contentmanagement.asmx?WSDL'
+        list_management: 'https://ws.campaigner.com/2013/01/listmanagement.asmx?WSDL'
+        smtp_management: 'https://ws.csmtp.net/2014/06/SMTPService.asmx?WSDL'
+        workflow_management: 'https://ws.campaigner.com/2013/01/workflowmanagement.asmx?WSDL'
     xsd:
         contacts_search_criteria: '@EXSCampaignerBundle/Resources/xsd/ContactsSearchCriteria2.xsd'
 ```
 
 ## Web services and methods
-
-* Contact Management Web Service
-
-  Service id : `exs_campaigner.contact_manager`
-
-  Methods :
-  * CreateUpdateAttribute
-  * DeleteAttribute
-  * DeleteContacts
-  * DownloadReport
-  * GetContacts
-  * GetUploadMassContactsResult
-  * GetUploadMassContactsStatus
-  * ImmediateUpload
-  * InitiateDoubleOptIn
-  * ListAttributes
-  * ListContactFields
-  * ListTestContacts
-  * ResubscribeContact
-  * RunReport
-  * UploadMassContacts
 
 
 * Campaign Management Web Service
@@ -84,21 +68,57 @@ exs_campaigner:
   Service id : `exs_campaigner.campaign_manager`
 
   Methods :
-  * CreateUpdateCampaign
-  * DeleteCampaign
-  * DeleteFromEmail
-  * GetCampaignRunsSummaryReport
-  * GetCampaignSummary
-  * GetTrackedLinkSummaryReport
-  * GetUnsubscribeMessages
-  * ListCampaigns
-  * ListFromEmails
-  * ListTrackedLinksByCampaign
-  * ScheduleCampaign
-  * SendTestCampaign
-  * SetCampaignRecipients
-  * StopCampaign
-  * ValidateFromEmail
+  * [CreateUpdateCampaign](docs/Campaigner-Elements-API-User-Guide.pdf#page=91)
+  * [DeleteCampaign](docs/Campaigner-Elements-API-User-Guide.pdf#page=98)
+  * [DeleteFromEmail](docs/Campaigner-Elements-API-User-Guide.pdf#page=100)
+  * [GetCampaignRunsSummaryReport](docs/Campaigner-Elements-API-User-Guide.pdf#page=102)
+  * [GetCampaignSummary](docs/Campaigner-Elements-API-User-Guide.pdf#page=110)
+  * [GetTrackedLinkSummaryReport](docs/Campaigner-Elements-API-User-Guide.pdf#page=117)
+  * [GetUnsubscribeMessages](docs/Campaigner-Elements-API-User-Guide.pdf#page=120)
+  * [ListCampaigns](docs/Campaigner-Elements-API-User-Guide.pdf#page=123)
+  * [ListFromEmails](docs/Campaigner-Elements-API-User-Guide.pdf#page=128)
+  * [ListTrackedLinksByCampaign](docs/Campaigner-Elements-API-User-Guide.pdf#page=131)
+  * [ScheduleCampaign](docs/Campaigner-Elements-API-User-Guide.pdf#page=134)
+  * [SendTestCampaign](docs/Campaigner-Elements-API-User-Guide.pdf#page=137)
+  * [SetCampaignRecipients](docs/Campaigner-Elements-API-User-Guide.pdf#page=139)
+  * [StopCampaign](docs/Campaigner-Elements-API-User-Guide.pdf#page=141)
+  * [ValidateFromEmail](docs/Campaigner-Elements-API-User-Guide.pdf#page=143)
+
+
+* Contact Management Web Service
+
+  Service id : `exs_campaigner.contact_manager`
+
+  Methods :
+  * [CreateUpdateAttribute](docs/Campaigner-Elements-API-User-Guide.pdf#page=26)
+  * [DeleteAttribute](docs/Campaigner-Elements-API-User-Guide.pdf#page=30)
+  * [DeleteContacts](docs/Campaigner-Elements-API-User-Guide.pdf#page=32)
+  * [DownloadReport](docs/Campaigner-Elements-API-User-Guide.pdf#page=34)
+  * [GetContacts](docs/Campaigner-Elements-API-User-Guide.pdf#page=37)
+  * [GetUploadMassContactsResult](docs/Campaigner-Elements-API-User-Guide.pdf#page=45)
+  * [GetUploadMassContactsStatus](docs/Campaigner-Elements-API-User-Guide.pdf#page=49)
+  * [ImmediateUpload](docs/Campaigner-Elements-API-User-Guide.pdf#page=53)
+  * [InitiateDoubleOptIn](docs/Campaigner-Elements-API-User-Guide.pdf#page=63)
+  * [ListAttributes](docs/Campaigner-Elements-API-User-Guide.pdf#page=67)
+  * [ListContactFields](docs/Campaigner-Elements-API-User-Guide.pdf#page=71)
+  * [ListTestContacts](docs/Campaigner-Elements-API-User-Guide.pdf#page=75)
+  * [ResubscribeContact](docs/Campaigner-Elements-API-User-Guide.pdf#page=78)
+  * [RunReport](docs/Campaigner-Elements-API-User-Guide.pdf#page=82)
+  * [UploadMassContacts](docs/Campaigner-Elements-API-User-Guide.pdf#page=85)
+
+
+* Content Management Web Service
+
+  Service id : `exs_campaigner.content_manager`
+
+  Methods :
+  * [CreateUpdateMyTemplates](docs/Campaigner-Elements-API-User-Guide.pdf#page=157)
+  * [DeleteMediaFiles](docs/Campaigner-Elements-API-User-Guide.pdf#page=161)
+  * [GetEmailTemplate](docs/Campaigner-Elements-API-User-Guide.pdf#page=163)
+  * [ListEmailTemplates](docs/Campaigner-Elements-API-User-Guide.pdf#page=165)
+  * [ListMediaFiles](docs/Campaigner-Elements-API-User-Guide.pdf#page=168)
+  * [ListProjects](docs/Campaigner-Elements-API-User-Guide.pdf#page=171)
+  * [UploadMediaFile](docs/Campaigner-Elements-API-User-Guide.pdf#page=173)
 
 
 * List Management Web Service
@@ -106,11 +126,28 @@ exs_campaigner:
   Service id : `exs_campaigner.list_manager`
 
   Methods :
-  * CreateUpdateContactGroups
-  * DeleteContactGroups
-  * ListContactGroups
-  
-  
-* _Content Management Web Service_ (Not implemented yet)
-* _Workflow Management Web Service_ (Not implemented yet)
-* _SMTPService Web Service_ (Not implemented yet)
+  * [CreateUpdateContactGroups](docs/Campaigner-Elements-API-User-Guide.pdf#page=146)
+  * [DeleteContactGroups](docs/Campaigner-Elements-API-User-Guide.pdf#page=150)
+  * [ListContactGroups](docs/Campaigner-Elements-API-User-Guide.pdf#page=152)
+
+
+* SMTPService Web Service
+
+  Service id : `exs_campaigner.smtp_manager`
+
+  Methods :
+  * [DownloadReport](docs/Campaigner-Elements-API-User-Guide.pdf#page=183)
+  * [GetDetailSmtpStatus](docs/Campaigner-Elements-API-User-Guide.pdf#page=185)
+  * [GetSmtpActivityReport](docs/Campaigner-Elements-API-User-Guide.pdf#page=190)
+  * [GetSmtpBounceReport](docs/Campaigner-Elements-API-User-Guide.pdf#page=195)
+  * [GetSmtpReportGroupSummary](docs/Campaigner-Elements-API-User-Guide.pdf#page=200)
+  * [RunReport](docs/Campaigner-Elements-API-User-Guide.pdf#page=205)
+
+
+* Workflow Management Web Service
+
+  Service id : `exs_campaigner.workflow_manager`
+
+  Methods :
+  * [ListWorkflows](docs/Campaigner-Elements-API-User-Guide.pdf#page=177)
+  * [TriggerWorkflow](docs/Campaigner-Elements-API-User-Guide.pdf#page=180)

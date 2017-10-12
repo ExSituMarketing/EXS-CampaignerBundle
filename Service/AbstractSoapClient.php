@@ -196,6 +196,34 @@ abstract class AbstractSoapClient
     }
 
     /**
+     * Validates report type value.
+     *
+     * @param string $reportType
+     *
+     * @return string
+     */
+    protected function validateReportType($reportType)
+    {
+        $reportTypes = [
+            'rpt_Detailed_Contact_Results_by_Campaign',
+            'rpt_Summary_Contact_Results_by_Campaign',
+            'rpt_Summary_Campaign_Results',
+            'rpt_Summary_Campaign_Results_by_Domain',
+            'rpt_Contact_Attributes',
+            'rpt_Contact_Details',
+            'rpt_Contact_Group_Membership',
+            'rpt_Groups',
+            'rpt_Tracked_Links',
+        ];
+
+        if (false === in_array($reportType, $reportTypes)) {
+            throw new InvalidConfigurationException(sprintf('Invalid reportType value "%s".', $reportType));
+        }
+
+        return $reportType;
+    }
+
+    /**
      * @param \DateTime $date
      *
      * @return string

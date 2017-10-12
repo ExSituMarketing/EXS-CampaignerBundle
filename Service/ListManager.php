@@ -107,7 +107,7 @@ class ListManager extends AbstractSoapClient
             'CustomSegment',
         ];
 
-        if (null === in_array($contactGroupType, $contactGroupTypes)) {
+        if (false === in_array($contactGroupType, $contactGroupTypes)) {
             throw new InvalidConfigurationException(sprintf('Invalid ContactGroupType "%s".', $contactGroupType));
         }
 
@@ -129,7 +129,7 @@ class ListManager extends AbstractSoapClient
             'ByNumberOfContacts',
         ];
 
-        if (null === in_array($samplingType, $samplingTypes)) {
+        if (false === in_array($samplingType, $samplingTypes)) {
             throw new InvalidConfigurationException(sprintf('Invalid samplingType "%s".', $samplingType));
         }
 

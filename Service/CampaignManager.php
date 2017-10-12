@@ -484,7 +484,7 @@ class CampaignManager extends AbstractSoapClient
             'Sent',
         ];
 
-        if (null === in_array($campaignStatus, $campaignStatuses)) {
+        if (false === in_array($campaignStatus, $campaignStatuses)) {
             throw new InvalidConfigurationException(sprintf('Invalid CampaignStatus "%s".', $campaignStatus));
         }
 
@@ -507,7 +507,7 @@ class CampaignManager extends AbstractSoapClient
             'Continuous',
         ];
 
-        if (null === in_array($campaignType, $campaignTypes)) {
+        if (false === in_array($campaignType, $campaignTypes)) {
             throw new InvalidConfigurationException(sprintf('Invalid CampaignType "%s".', $campaignType));
         }
 
@@ -540,7 +540,7 @@ class CampaignManager extends AbstractSoapClient
             'Vietnamese_Windows_1258',
         ];
 
-        if (null === in_array($encoding, $encodings)) {
+        if (false === in_array($encoding, $encodings)) {
             throw new InvalidConfigurationException(sprintf('Invalid CampaignType "%s".', $encoding));
         }
 
@@ -564,7 +564,7 @@ class CampaignManager extends AbstractSoapClient
             'Annually',
         ];
 
-        if (null === in_array($recurrenceType, $recurrenceTypes)) {
+        if (false === in_array($recurrenceType, $recurrenceTypes)) {
             throw new InvalidConfigurationException(sprintf('Invalid RecurrenceType "%s".', $recurrenceType));
         }
 

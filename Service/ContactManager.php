@@ -88,30 +88,17 @@ class ContactManager extends AbstractSoapClient
      *
      * @return mixed|null
      */
-    public function DownloadReport($reportTicketId, $fromRow = 1, $toRow = 100, $reportType = 'rpt_Contact_Details')
+    public function DownloadReport($reportTicketId, $fromRow = 1, $toRow = 100, $reportType = null)
     {
-        $reportTypes = [
-            'rpt_Detailed_Contact_Results_by_Campaign',
-            'rpt_Summary_Contact_Results_by_Campaign',
-            'rpt_Summary_Campaign_Results',
-            'rpt_Summary_Campaign_Results_by_Domain',
-            'rpt_Contact_Attributes',
-            'rpt_Contact_Details',
-            'rpt_Contact_Group_Membership',
-            'rpt_Groups',
-            'rpt_Tracked_Links',
-        ];
-
-        if (null === in_array($reportType, $reportTypes)) {
-            throw new InvalidConfigurationException(sprintf('Invalid reportType value "%s".', $reportType));
-        }
-
         $parameters = [
             'reportTicketId' => $reportTicketId,
             'fromRow' => $fromRow,
             'toRow' => $toRow,
-            'reportType' => $reportType,
         ];
+
+        if (null !== $reportType) {
+            $parameters['reportType'] = $this->validateReportType($reportType);
+        }
 
         return $this->callMethod(__FUNCTION__, $parameters);
     }
@@ -227,7 +214,7 @@ class ContactManager extends AbstractSoapClient
     public function InitiateDoubleOptIn(array $contactKeys, $xmlContactQuery, $formId)
     {
         if (false === $this->isValidXmlContactQuery($xmlContactQuery)) {
-            return null;
+            return false;
         }
 
         return $this->callMethod(__FUNCTION__, [
@@ -335,7 +322,7 @@ class ContactManager extends AbstractSoapClient
     public function RunReport($xmlContactQuery)
     {
         if (false === $this->isValidXmlContactQuery($xmlContactQuery)) {
-            return null;
+            return false;
         }
 
         return $this->callMethod(__FUNCTION__, [
@@ -512,7 +499,7 @@ class ContactManager extends AbstractSoapClient
             'Pending',
         ];
 
-        if (null === in_array($status, $statuses)) {
+        if (false === in_array($status, $statuses)) {
             throw new InvalidConfigurationException(sprintf('Invalid Status "%s".', $status));
         }
 

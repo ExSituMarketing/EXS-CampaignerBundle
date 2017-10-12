@@ -6,6 +6,13 @@ services:
             - '@file_locator'
             - '%exs_campaigner.xsd.contact_search_criteria%'
 
+    exs_campaigner.campaign_manager:
+        class: 'EXS\CampaignerBundle\Service\CampaignManager'
+        arguments:
+            - '%exs_campaigner.wsdl.campaign_management%'
+            - '%exs_campaigner.username%'
+            - '%exs_campaigner.password%'
+
     exs_campaigner.contact_manager:
         class: 'EXS\CampaignerBundle\Service\ContactManager'
         configurator: ['@exs_campaigner.manager_configurator', 'configure']
@@ -14,10 +21,10 @@ services:
             - '%exs_campaigner.username%'
             - '%exs_campaigner.password%'
 
-    exs_campaigner.campaign_manager:
-        class: 'EXS\CampaignerBundle\Service\CampaignManager'
+    exs_campaigner.content_management:
+        class: 'EXS\CampaignerBundle\Service\ContentManager'
         arguments:
-            - '%exs_campaigner.wsdl.campaign_management%'
+            - '%exs_campaigner.wsdl.list_management%'
             - '%exs_campaigner.username%'
             - '%exs_campaigner.password%'
 
@@ -29,8 +36,9 @@ services:
             - '%exs_campaigner.username%'
             - '%exs_campaigner.password%'
 
-    exs_campaigner.content_management:
-        class: 'EXS\CampaignerBundle\Service\ContentManager'
+    exs_campaigner.smtp_management:
+        class: 'EXS\CampaignerBundle\Service\SmtpManager'
+        configurator: ['@exs_campaigner.manager_configurator', 'configure']
         arguments:
             - '%exs_campaigner.wsdl.list_management%'
             - '%exs_campaigner.username%'
