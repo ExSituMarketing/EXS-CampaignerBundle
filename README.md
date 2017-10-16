@@ -10,6 +10,10 @@ See [Campaigner API User Guide](docs/Campaigner-Elements-API-User-Guide.pdf) for
 
 ## Installation
 
+This bundle uses [PHP's native SOAP objects](http://php.net/manual/en/book.soap.php).
+
+**Make sure soap module is enabled in your PHP's installation.**
+
 Download the bundle using composer
 
 ```
