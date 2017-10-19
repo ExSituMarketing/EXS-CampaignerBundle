@@ -14,6 +14,7 @@ class CampaignManager extends AbstractSoapClient
     /**
      * This web method creates an email campaign with the information provided, such as the email addresses used in the email header,
      * the message content, and options for unsubscribing and viewing in a browser.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 91
      *
      * @param int       $id
@@ -136,6 +137,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method deletes a campaign. You can choose to delete associated reports at the same time.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 98
      *
      * @param int  $campaignId
@@ -153,6 +155,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method deletes an email address that was previously validated for use as a From email address in the email header of email campaigns.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 100
      *
      * @param string $email
@@ -168,6 +171,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method provides information about instances of runs for specified email campaigns, optionally grouped by domain.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 102
      *
      * @param bool      $groupByDomain
@@ -228,6 +232,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method returns information about a specific campaign, such as its name, addressing information, subject, and status.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 110
      *
      * @param int $campaignId
@@ -243,6 +248,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method returns identifying information about trackable links in a campaign, as well as related contact activity.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 117
      *
      * @param $campaignRunId
@@ -258,6 +264,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method obtains the identifier and contents of all unsubscribe messages associated with the account.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 120
      *
      * @return array|bool|null
@@ -269,6 +276,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method lists all campaigns and their properties (such as the status and type) for an account.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 123
      *
      * @param string    $campaignStatus
@@ -332,6 +340,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method returns all the validated and pending email addresses associated with an account.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 128
      *
      * @return array|bool|null
@@ -343,6 +352,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method returns identifying information about all tracked links, grouped by specified campaigns.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 131
      *
      * @param array $campaignIds
@@ -358,6 +368,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method schedules a specified email campaign to be sent to selected recipients.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 134
      *
      * @param int       $campaignId
@@ -391,6 +402,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method sends a specified email campaign to selected recipients for testing purposes.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 137
      *
      * @param int    $campaignId
@@ -418,6 +430,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method adds recipients for an email campaign.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 139
      *
      * @param int   $campaignId
@@ -442,6 +455,7 @@ class CampaignManager extends AbstractSoapClient
 
     /**
      * This web method stops a scheduled campaign from being sent.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 141
      *
      * @param int $campaignId

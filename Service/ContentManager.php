@@ -11,6 +11,7 @@ class ContentManager extends AbstractSoapClient
 {
     /**
      * This web method adds or updates a custom email template for the Full Email Editor or the New Smart Email Builder.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 157
      *
      * @param int    $templateId
@@ -70,6 +71,7 @@ class ContentManager extends AbstractSoapClient
 
     /**
      * This web method deletes one or more media files in the image library for an account.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 161
      *
      * @param array $mediaFileIds
@@ -85,6 +87,7 @@ class ContentManager extends AbstractSoapClient
 
     /**
      * This web method downloads a single HTML email template and, if available, the plain text version of the email template (base64 encoded).
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 163
      *
      * @param int $templateId
@@ -100,6 +103,7 @@ class ContentManager extends AbstractSoapClient
 
     /**
      * This web method lists all available email templates for an account.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 165
      *
      * @return array|bool|null
@@ -111,6 +115,7 @@ class ContentManager extends AbstractSoapClient
 
     /**
      * This web method lists the media files in the image library for an account.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 165
      *
      * @return array|bool|null
@@ -122,6 +127,7 @@ class ContentManager extends AbstractSoapClient
 
     /**
      * This web method lists the projects on an account.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 171
      *
      * @return array|bool|null
@@ -133,6 +139,7 @@ class ContentManager extends AbstractSoapClient
 
     /**
      * This web method uploads one media file to the image library for an account, and returns identifying information (such as file name and the URL) for the media file.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 173
      *
      * @param string $localFilename

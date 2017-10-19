@@ -13,6 +13,7 @@ class ListManager extends AbstractSoapClient
 {
     /**
      * This web method creates a new mailing list, or renames an existing mailing list or segment.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 146
      *
      * @param string $contactGroupType
@@ -67,6 +68,7 @@ class ListManager extends AbstractSoapClient
 
     /**
      * This web method deletes a mailing list or static segment.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 150
      *
      * @param int $contactGroupIds
@@ -82,6 +84,7 @@ class ListManager extends AbstractSoapClient
 
     /**
      * This web method obtains a list of descriptions for mailings, dynamic segments, or static segments.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 152
      *
      * @return array|bool|null

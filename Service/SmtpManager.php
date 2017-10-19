@@ -11,6 +11,7 @@ class SmtpManager extends AbstractSoapClient
 {
     /**
      * This web method returns various untyped reports based on the contacts obtained using the RunReport web method.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 183
      *
      * @param string $reportTicketId
@@ -37,6 +38,7 @@ class SmtpManager extends AbstractSoapClient
 
     /**
      * This web method returns a report with details about activity for SMTP emails that have been sent, such as the emails that were sent and their recipients.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 183
      *
      * @param array     $reportGroupIds
@@ -65,6 +67,7 @@ class SmtpManager extends AbstractSoapClient
 
     /**
      * This web method returns a report with details about email activity for SMTP emails that have been sent, such as the opens, click, or replies.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 190
      *
      * @param array     $reportGroupIds
@@ -93,6 +96,7 @@ class SmtpManager extends AbstractSoapClient
 
     /**
      * This web method returns a report about which SMTP emails were sent, but bounced.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 195
      *
      * @param array     $reportGroupIds
@@ -122,6 +126,7 @@ class SmtpManager extends AbstractSoapClient
     /**
      * This web method returns a report with summary information about activity and delivery for
      * SMTP emails that have been sent in a specified SMTP report groups, and optionally, by SMTP users.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 200
      *
      * @param array     $reportGroupIds
@@ -150,6 +155,7 @@ class SmtpManager extends AbstractSoapClient
 
     /**
      * This web method processes an XML query string to obtain rows of contact information, which are then stored on Campaigner®.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 205
      *
      * @param string $xmlContactQuery

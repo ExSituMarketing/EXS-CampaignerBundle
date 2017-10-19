@@ -15,6 +15,7 @@ class ContactManager extends AbstractSoapClient
 {
     /**
      * This web method adds a custom contact attribute, or updates a default or custom contact attribute for all contacts.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 27
      *
      * @param int    $attributeId
@@ -48,6 +49,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method deletes an existing custom attribute.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 30
      *
      * @param int $id
@@ -63,6 +65,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method deletes one or more specified contacts.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 32
      *
      * @param array $contactKeys
@@ -79,6 +82,7 @@ class ContactManager extends AbstractSoapClient
     /**
      * This web method returns various untyped reports based on the contacts obtained using the
      * RunReport web method, as described in "RunReport Web Method".
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 34
      *
      * @param string $reportTicketId
@@ -105,6 +109,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method returns information about attributes for up to 1000 specified contacts.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 37
      *
      * @param array $contactKeys
@@ -131,12 +136,13 @@ class ContactManager extends AbstractSoapClient
                 'IncludeCustomAttributes' => (bool)$includeCustomAttributes,
                 'IncludeSystemAttributes' => (bool)$includeSystemAttributes,
                 'IncludeGroupMembershipsAttributes' => (bool)$includeGroupMembershipsAttributes,
-            ]
+            ],
         ]);
     }
 
     /**
      * This web method returns the results from uploaded contacts for a request initiated by UploadMassContacts.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 45
      *
      * @param int $uploadTicketId
@@ -152,6 +158,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method returns the current status for an upload request initiated by the UploadMassContacts web method.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 49
      *
      * @param $uploadTicketId
@@ -167,6 +174,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method synchronously adds contacts and defines their information, or updates information for existing contacts for up to 1000 contacts.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 53
      *
      * @param bool  $updateExistingContacts
@@ -203,6 +211,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * The InitiateDoubleOptIn web method is used when requests to receive email campaigns are gathered by a custom application or interface, instead of a Campaigner® sign up form.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 63
      *
      * @param array  $contactKeys
@@ -228,6 +237,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method lists all contact attributes and their properties (such as the identifier and type).
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 67
      *
      * @param bool $includeAllDefaultAttributes
@@ -252,6 +262,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method lists all contact fields and their properties (such as the identifier and type).
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 71
      *
      * @param bool $includeAllDefaultAttributes
@@ -276,6 +287,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method lists the top 5000 test contacts associated with an account. You can specify a value to limit results.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 75
      *
      * @param int $contactCount
@@ -291,6 +303,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * This web method changes one contact's status from Unsubscribed to Subscribed, HardBounce, SoftBounce, or Pending.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 78
      *
      * @param int    $contactId
@@ -313,6 +326,7 @@ class ContactManager extends AbstractSoapClient
     /**
      * This web method processes an XML query string to obtain rows of contact information, which are then stored on Campaigner®.
      * The web method also returns a ticket ID for the query request and the number of rows obtained.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 82
      *
      * @param string $xmlContactQuery
@@ -333,9 +347,10 @@ class ContactManager extends AbstractSoapClient
     /**
      * Like ImmediateUpload, the UploadMassContacts web method uploads contact information for multiple contacts at the same time to Campaigner®,
      * and performs additional processing, such as changing group memberships for contacts being uploaded.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 85
      *
-     * @param bool $updateExistingContacts
+     * @param bool  $updateExistingContacts
      * @param bool  $triggerWorkflow
      * @param array $contacts
      * @param array $globalAddToGroup

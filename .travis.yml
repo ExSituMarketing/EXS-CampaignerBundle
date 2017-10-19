@@ -21,6 +21,9 @@ before_install:
     - composer self-update
     - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
 
-install: composer install --prefer-dist --no-interaction
+install:
+    - composer install --prefer-dist --no-interaction
 
-script: bin/phpunit -c . --coverage-text
+script:
+    - bin/phpunit -c . --coverage-text
+    - bin/php-cs-fixer fix . --config=.php_cs.dist --dry-run --verbose --path-mode=intersection

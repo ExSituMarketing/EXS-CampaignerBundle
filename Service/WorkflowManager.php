@@ -11,6 +11,7 @@ class WorkflowManager extends AbstractSoapClient
 {
     /**
      * This web method returns information about each workflow, including the name, identifier, and status.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 177
      *
      * @param bool $onlyApiTriggered
@@ -28,6 +29,7 @@ class WorkflowManager extends AbstractSoapClient
 
     /**
      * This web method triggers a specified workflow for selected contacts.
+     *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 180
      *
      * @param int    $workflowId

@@ -4,4 +4,4 @@ composer.phar
 composer.lock
 bin
 Tests/Coverage
-.idea
+.php_cs.cache
