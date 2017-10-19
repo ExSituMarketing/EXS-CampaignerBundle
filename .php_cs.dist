@@ -1,0 +1,17 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->exclude(['bin', 'docs', 'Tests'])
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+    ->setUsingCache(false)
+    ->setRules([
+        '@Symfony' => true,
+        'phpdoc_no_package' => false,
+        'cast_spaces' => ['space' => 'none'],
+        'phpdoc_summary' => false,
+    ])
+    ->setFinder($finder)
+;
