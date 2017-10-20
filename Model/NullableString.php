@@ -27,7 +27,7 @@ class NullableString
      */
     public function __construct($IsNull, $value)
     {
-        $this->IsNull = (bool)$IsNull;
-        $this->value = (string)$value;
+        $this->IsNull = $IsNull;
+        $this->value = $value;
     }
 }

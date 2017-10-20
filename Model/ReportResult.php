@@ -10,62 +10,62 @@ namespace EXS\CampaignerBundle\Model;
 class ReportResult
 {
     /**
-     * @var int
+     * @var int|null
      */
     public $AccountId;
 
     /**
-     * @var int
+     * @var int|null
      */
     public $ContactId;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $ContactUniqueIdentifier;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $FirstName;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $LastName;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $Email;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $Status;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $creationMethod;
 
     /**
-     * @var string
+     * @var string|null
      */
     public $EmailFormat;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     public $DateCreatedUTC;
 
     /**
-     * @var bool
+     * @var bool|null
      */
     public $hbOnUpload;
 
     /**
-     * @var bool
+     * @var bool|null
      */
     public $IsTestContact;
 
