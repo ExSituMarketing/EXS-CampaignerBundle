@@ -41,10 +41,10 @@ class ListManager extends AbstractSoapClient
     ) {
         $parameters = [
             'contactGroupType' => $this->validateContactGroupType($contactGroupType),
-            'contactGroupId' => (int)$contactGroupId,
-            'sampleSize' => (int)$sampleSize,
-            'isGroupVisible' => (bool)$isGroupVisible,
-            'isTempGroup' => (bool)$isTempGroup,
+            'contactGroupId' => $contactGroupId,
+            'sampleSize' => $sampleSize,
+            'isGroupVisible' => $isGroupVisible,
+            'isTempGroup' => $isTempGroup,
         ];
 
         if (null !== $name) {
@@ -55,7 +55,10 @@ class ListManager extends AbstractSoapClient
             $parameters['description'] = $description;
         }
 
-        if (true === $this->isValidXmlContactQuery($xmlContactQuery)) {
+        if (
+            (null !== $xmlContactQuery)
+            && (true === $this->isValidXmlContactQuery($xmlContactQuery))
+        ) {
             $parameters['xmlContactQuery'] = $xmlContactQuery;
         }
 
@@ -78,7 +81,7 @@ class ListManager extends AbstractSoapClient
     public function DeleteContactGroups($contactGroupIds)
     {
         return $this->callMethod(__FUNCTION__, [
-            'contactGroupIds' => (int)$contactGroupIds,
+            'contactGroupIds' => $contactGroupIds,
         ]);
     }
 

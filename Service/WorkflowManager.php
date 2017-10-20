@@ -22,8 +22,8 @@ class WorkflowManager extends AbstractSoapClient
     public function ListWorkflows($onlyApiTriggered, $onlyActiveAndTest)
     {
         return $this->callMethod(__FUNCTION__, [
-            'onlyApiTriggered' => (bool)$onlyApiTriggered,
-            'onlyActiveAndTest' => (bool)$onlyActiveAndTest,
+            'onlyApiTriggered' => $onlyApiTriggered,
+            'onlyActiveAndTest' => $onlyActiveAndTest,
         ]);
     }
 
@@ -44,8 +44,8 @@ class WorkflowManager extends AbstractSoapClient
         }
 
         return $this->callMethod(__FUNCTION__, [
-            'workflowId' => (int)$workflowId,
-            'xmlContactQuery' => (string)$xmlContactQuery,
+            'workflowId' => $workflowId,
+            'xmlContactQuery' => $xmlContactQuery,
         ]);
     }
 }

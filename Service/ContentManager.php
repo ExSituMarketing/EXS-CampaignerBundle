@@ -40,18 +40,18 @@ class ContentManager extends AbstractSoapClient
         $description = null
     ) {
         $parameters = [
-            'TemplateId' => (int)$templateId,
-            'TemplateName' => (string)$templateName,
-            'CategoryId' => (int)$categoryId,
-            'EditorType' => (string)$editorType,
+            'TemplateId' => $templateId,
+            'TemplateName' => $templateName,
+            'CategoryId' => $categoryId,
+            'EditorType' => $editorType,
             'templateContent' => [
-                'HTML' => (string)$html,
-                'Text' => (string)$text,
+                'HTML' => $html,
+                'Text' => $text,
             ],
         ];
 
         if (null !== $description) {
-            $parameters['Description'] = (string)$description;
+            $parameters['Description'] = $description;
         }
 
         if (null !== $tags) {
@@ -59,11 +59,11 @@ class ContentManager extends AbstractSoapClient
         }
 
         if (null !== $isVisible) {
-            $parameters['IsVisible'] = (bool)$isVisible;
+            $parameters['IsVisible'] = $isVisible;
         }
 
         if (null !== $isResponsive) {
-            $parameters['IsResponsive'] = (bool)$isResponsive;
+            $parameters['IsResponsive'] = $isResponsive;
         }
 
         return $this->callMethod(__FUNCTION__, $parameters);
@@ -97,7 +97,7 @@ class ContentManager extends AbstractSoapClient
     public function GetEmailTemplate($templateId)
     {
         return $this->callMethod(__FUNCTION__, [
-            'templateId' => (int)$templateId,
+            'templateId' => $templateId,
         ]);
     }
 

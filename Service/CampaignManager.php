@@ -65,22 +65,22 @@ class CampaignManager extends AbstractSoapClient
         $encoding = 'Unspecified'
     ) {
         $campaignData = [
-            'Id' => (int)$id,
-            'CampaignName' => (string)$campaignName,
+            'Id' => $id,
+            'CampaignName' => $campaignName,
             'CampaignStatus' => $this->validateCampaignStatus($campaignStatus),
             'CampaignType' => $this->validateCampaignType($campaignType),
-            'FromEmailId' => (int)$fromEmailId,
-            'ReplyEmailId' => (int)$replyEmailId,
-            'TrackReplies' => (bool)$trackReplies,
-            'AutoReplyMessageId' => (int)$autoReplyMessageId,
-            'ProjectId' => (int)$projectId,
-            'IsWelcomeCampaign' => (bool)$isWelcomeCampaign,
+            'FromEmailId' => $fromEmailId,
+            'ReplyEmailId' => $replyEmailId,
+            'TrackReplies' => $trackReplies,
+            'AutoReplyMessageId' => $autoReplyMessageId,
+            'ProjectId' => $projectId,
+            'IsWelcomeCampaign' => $isWelcomeCampaign,
             'DateModified' => $this->getUtcDatetime($dateModified),
             'Encoding' => $this->validateEncoding($encoding),
         ];
 
         if (false === empty($campaignSubject)) {
-            $campaignData['CampaignSubject'] = (string)$campaignSubject;
+            $campaignData['CampaignSubject'] = $campaignSubject;
         }
 
         if (false === empty($campaignFormat)) {
@@ -88,15 +88,15 @@ class CampaignManager extends AbstractSoapClient
         }
 
         if (false === empty($htmlContent)) {
-            $campaignData['HtmlContent'] = (string)$htmlContent;
+            $campaignData['HtmlContent'] = $htmlContent;
         }
 
         if (false === empty($txtContent)) {
-            $campaignData['TxtContent'] = (string)$txtContent;
+            $campaignData['TxtContent'] = $txtContent;
         }
 
         if (false === empty($fromName)) {
-            $campaignData['FromName'] = (string)$fromName;
+            $campaignData['FromName'] = $fromName;
         }
 
         if (null !== $subscriptionSettings) {
@@ -148,8 +148,8 @@ class CampaignManager extends AbstractSoapClient
     public function DeleteCampaign($campaignId, $deleteReports)
     {
         return $this->callMethod(__FUNCTION__, [
-            'campaignId' => (int)$campaignId,
-            'deleteReports' => (bool)$deleteReports,
+            'campaignId' => $campaignId,
+            'deleteReports' => $deleteReports,
         ]);
     }
 
@@ -165,7 +165,7 @@ class CampaignManager extends AbstractSoapClient
     public function DeleteFromEmail($email)
     {
         return $this->callMethod(__FUNCTION__, [
-            'Email' => (string)$email,
+            'Email' => $email,
         ]);
     }
 
@@ -192,7 +192,7 @@ class CampaignManager extends AbstractSoapClient
         \DateTime $toDate = null
     ) {
         $parameters = [
-            'groupByDomain' => (bool)$groupByDomain,
+            'groupByDomain' => $groupByDomain,
         ];
 
         $campaignFilter = [];
@@ -242,7 +242,7 @@ class CampaignManager extends AbstractSoapClient
     public function GetCampaignSummary($campaignId)
     {
         return $this->callMethod(__FUNCTION__, [
-            'campaignId' => (int)$campaignId,
+            'campaignId' => $campaignId,
         ]);
     }
 
@@ -389,13 +389,13 @@ class CampaignManager extends AbstractSoapClient
         $occurrenceCount = 0
     ) {
         return $this->callMethod(__FUNCTION__, [
-            'campaignId' => (int)$campaignId,
-            'sendNow' => (bool)$sendNow,
+            'campaignId' => $campaignId,
+            'sendNow' => $sendNow,
             'campaignSchedule' => [
                 'StartDate' => $this->getUtcDatetime($startDate),
                 'EndDate' => $this->getUtcDatetime($endDate),
                 'RecurrenceType' => $this->validateRecurrenceType($recurrenceType),
-                'OccurrenceCount' => (int)$occurrenceCount,
+                'OccurrenceCount' => $occurrenceCount,
             ],
         ]);
     }
@@ -419,10 +419,10 @@ class CampaignManager extends AbstractSoapClient
         array $emails
     ) {
         return $this->callMethod(__FUNCTION__, [
-            'campaignId' => (int)$campaignId,
+            'campaignId' => $campaignId,
             'contactKeyForTest' => [
-                'ContactId' => (int)$contactId,
-                'ContactUniqueIdentifier' => (string)$contactUniqueIdentifier,
+                'ContactId' => $contactId,
+                'ContactUniqueIdentifier' => $contactUniqueIdentifier,
             ],
             'emails' => $emails,
         ]);
@@ -445,9 +445,9 @@ class CampaignManager extends AbstractSoapClient
         array $contactGroupIds
     ) {
         return $this->callMethod(__FUNCTION__, [
-            'campaignId' => (int)$campaignId,
+            'campaignId' => $campaignId,
             'campaignRecipients' => [
-                'SendToAllContacts' => (bool)$sendToAllContacts,
+                'SendToAllContacts' => $sendToAllContacts,
                 'ContactGroupIds' => $contactGroupIds,
             ],
         ]);
@@ -465,7 +465,7 @@ class CampaignManager extends AbstractSoapClient
     public function StopCampaign($campaignId)
     {
         return $this->callMethod(__FUNCTION__, [
-            'campaignId' => (int)$campaignId,
+            'campaignId' => $campaignId,
         ]);
     }
 
@@ -477,7 +477,7 @@ class CampaignManager extends AbstractSoapClient
     public function ValidateFromEmail($email)
     {
         return $this->callMethod(__FUNCTION__, [
-            'email' => (string)$email,
+            'email' => $email,
         ]);
     }
 

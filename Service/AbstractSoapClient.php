@@ -111,9 +111,9 @@ abstract class AbstractSoapClient
         $responseHeaders = [];
 
         $result = $this->client->__soapCall(
-            (string)$methodName,
+            $methodName,
             [
-                (string)$methodName => array_merge(
+                $methodName => array_merge(
                     $this->authenticationNode,
                     $parameters
                 ),

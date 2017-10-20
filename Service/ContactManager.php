@@ -41,7 +41,7 @@ class ContactManager extends AbstractSoapClient
         ];
 
         if (false === $clearDefault) {
-            $parameters['defaultValue'] = (string)$defaultValue;
+            $parameters['defaultValue'] = $defaultValue;
         }
 
         return $this->callMethod(__FUNCTION__, $parameters);
@@ -132,10 +132,10 @@ class ContactManager extends AbstractSoapClient
                 'ContactKeys' => $this->validateContactKeys($contactKeys),
             ],
             'contactInformationFilter' => [
-                'IncludeStaticAttributes' => (bool)$includeStaticAttributes,
-                'IncludeCustomAttributes' => (bool)$includeCustomAttributes,
-                'IncludeSystemAttributes' => (bool)$includeSystemAttributes,
-                'IncludeGroupMembershipsAttributes' => (bool)$includeGroupMembershipsAttributes,
+                'IncludeStaticAttributes' => $includeStaticAttributes,
+                'IncludeCustomAttributes' => $includeCustomAttributes,
+                'IncludeSystemAttributes' => $includeSystemAttributes,
+                'IncludeGroupMembershipsAttributes' => $includeGroupMembershipsAttributes,
             ],
         ]);
     }
