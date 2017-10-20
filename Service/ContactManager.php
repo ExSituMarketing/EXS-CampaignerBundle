@@ -85,10 +85,10 @@ class ContactManager extends AbstractSoapClient
      *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 34
      *
-     * @param string $reportTicketId
-     * @param int    $fromRow
-     * @param int    $toRow
-     * @param string $reportType
+     * @param string      $reportTicketId
+     * @param int         $fromRow
+     * @param int         $toRow
+     * @param string|null $reportType
      *
      * @return mixed|null
      */
@@ -177,11 +177,11 @@ class ContactManager extends AbstractSoapClient
      *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 53
      *
-     * @param bool  $updateExistingContacts
-     * @param bool  $triggerWorkflow
-     * @param array $contacts
-     * @param array $globalAddToGroup
-     * @param array $globalRemoveFromGroup
+     * @param bool       $updateExistingContacts
+     * @param bool       $triggerWorkflow
+     * @param array      $contacts
+     * @param array|null $globalAddToGroup
+     * @param array|null $globalRemoveFromGroup
      *
      * @return mixed|null
      */
@@ -324,6 +324,34 @@ class ContactManager extends AbstractSoapClient
     }
 
     /**
+     * Undocumented method of the API but that actually exists.
+     * Seems to be a proxy method for "UploadMassContacts" since all parameters are the same.
+     *
+     * @param bool       $updateExistingContacts
+     * @param bool       $triggerWorkflow
+     * @param array      $contacts
+     * @param array|null $globalAddToGroup
+     * @param array|null $globalRemoveFromGroup
+     *
+     * @return mixed
+     */
+    public function ReUploadContactsNV(
+        $updateExistingContacts,
+        $triggerWorkflow,
+        array $contacts,
+        array $globalAddToGroup = null,
+        array $globalRemoveFromGroup = null
+    ) {
+        return $this->UploadMassContacts(
+            $updateExistingContacts,
+            $triggerWorkflow,
+            $contacts,
+            $globalAddToGroup,
+            $globalRemoveFromGroup
+        );
+    }
+
+    /**
      * This web method processes an XML query string to obtain rows of contact information, which are then stored on Campaigner®.
      * The web method also returns a ticket ID for the query request and the number of rows obtained.
      *
@@ -350,11 +378,11 @@ class ContactManager extends AbstractSoapClient
      *
      * @see docs/Campaigner-Elements-API-User-Guide.pdf page 85
      *
-     * @param bool  $updateExistingContacts
-     * @param bool  $triggerWorkflow
-     * @param array $contacts
-     * @param array $globalAddToGroup
-     * @param array $globalRemoveFromGroup
+     * @param bool       $updateExistingContacts
+     * @param bool       $triggerWorkflow
+     * @param array      $contacts
+     * @param array|null $globalAddToGroup
+     * @param array|null $globalRemoveFromGroup
      *
      * @return mixed
      */
