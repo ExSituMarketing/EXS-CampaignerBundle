@@ -325,7 +325,7 @@ class ContactManager extends AbstractSoapClient
 
     /**
      * Undocumented method of the API but that actually exists.
-     * Seems to be a proxy method for "UploadMassContacts" since all parameters are the same.
+     * Seems very similar to "UploadMassContacts" since all parameters are the same.
      *
      * @param bool       $updateExistingContacts
      * @param bool       $triggerWorkflow
@@ -342,13 +342,21 @@ class ContactManager extends AbstractSoapClient
         array $globalAddToGroup = null,
         array $globalRemoveFromGroup = null
     ) {
-        return $this->UploadMassContacts(
-            $updateExistingContacts,
-            $triggerWorkflow,
-            $contacts,
-            $globalAddToGroup,
-            $globalRemoveFromGroup
-        );
+        $parameters = [
+            'UpdateExistingContacts' => $updateExistingContacts,
+            'TriggerWorkflow' => $triggerWorkflow,
+            'contacts' => $this->validateContactData($contacts),
+        ];
+
+        if (null !== $globalAddToGroup) {
+            $parameters['globalAddToGroup'] = $globalAddToGroup;
+        }
+
+        if (null !== $globalRemoveFromGroup) {
+            $parameters['globalRemoveFromGroup'] = $globalRemoveFromGroup;
+        }
+
+        return $this->callMethod(__FUNCTION__, $parameters);
     }
 
     /**
