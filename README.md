@@ -1,6 +1,6 @@
 # EXS/CampaignerBundle
 
-
+[![Build Status](https://travis-ci.org/ExSituMarketing/EXS-CampaignerBundle.svg?branch=master)](https://travis-ci.org/ExSituMarketing/EXS-CampaignerBundle)
 
 ## What is this bundle doing ?
 
