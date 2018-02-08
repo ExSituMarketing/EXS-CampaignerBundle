@@ -469,38 +469,18 @@ class ContactManager extends AbstractSoapClient
      */
     private function validateContactData(array $contactData)
     {
-        $validatedContactData = [];
-
         if (false === isset($contactData['ContactKey'])) {
             throw new InvalidConfigurationException('Missing "ContactKey" parameter.');
-        }
-
+        } 
+        
+        $validatedContactData = [];
+        foreach($contactData as $key => $value) {
+            if(!empty($value)) {
+                $validatedContactData[$key] = $value;
+            }
+        }       
+        
         $validatedContactData['ContactKey'] = $this->validateContactKey($contactData['ContactKey']);
-
-        $validatedContactData['EmailAddress'] = new NullableString(
-            !isset($contactData['EmailAddress']),
-            (string)$contactData['EmailAddress']
-        );
-
-        $validatedContactData['FirstName'] = new NullableString(
-            !isset($contactData['FirstName']),
-            (string)$contactData['FirstName']
-        );
-
-        $validatedContactData['LastName'] = new NullableString(
-            !isset($contactData['LastName']),
-            (string)$contactData['LastName']
-        );
-
-        $validatedContactData['PhoneNumber'] = new NullableString(
-            !isset($contactData['PhoneNumber']),
-            (string)$contactData['PhoneNumber']
-        );
-
-        $validatedContactData['Fax'] = new NullableString(
-            !isset($contactData['Fax']),
-            (string)$contactData['Fax']
-        );
 
         $validatedContactData['Status'] = isset($contactData['Status']) ? $this->validateStatus($contactData['Status']) : null;
 
