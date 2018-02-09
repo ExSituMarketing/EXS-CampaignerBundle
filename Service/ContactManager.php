@@ -195,7 +195,7 @@ class ContactManager extends AbstractSoapClient
         $parameters = [
             'UpdateExistingContacts' => $updateExistingContacts,
             'TriggerWorkflow' => $triggerWorkflow,
-            'contacts' => $this->validateContactData($contacts),
+            'contacts' => $this->ImmediateUploadMultipleContactsValidation($contacts, $updateExistingContacts)
         ];
 
         if (null !== $globalAddToGroup) {
@@ -207,6 +207,28 @@ class ContactManager extends AbstractSoapClient
         }
 
         return $this->callMethod(__FUNCTION__, $parameters);
+    }
+    
+    /**
+     * Validate single|multiple contacts
+     * 
+     * @param array $contacts
+     * @param bollean $updateExistingContacts
+     * @return array
+     */
+    public function ImmediateUploadMultipleContactsValidation(array $contacts, $updateExistingContacts = false)
+    {       
+        if(isset($contacts['ContactKey'])) {
+            return [$this->validateContactData($contacts, $updateExistingContacts)];
+        }
+        
+        $validContacts = [];
+        foreach($contacts as $contact) {
+            if(is_array($contact)) {
+                $validContacts[] = $this->validateContactData($contact, $updateExistingContacts);
+            }
+        }
+        return $validContacts;        
     }
 
     /**
@@ -401,10 +423,11 @@ class ContactManager extends AbstractSoapClient
         array $globalAddToGroup = null,
         array $globalRemoveFromGroup = null
     ) {
+        
         $parameters = [
             'UpdateExistingContacts' => $updateExistingContacts,
             'TriggerWorkflow' => $triggerWorkflow,
-            'contacts' => $this->validateContactData($contacts),
+            'contacts' => $this->validateContactData($contacts, $updateExistingContacts),
         ];
 
         if (null !== $globalAddToGroup) {
@@ -464,53 +487,85 @@ class ContactManager extends AbstractSoapClient
      * Validates "contactData" request node.
      *
      * @param array $contactData
+     * @param boolean $updateExistingContacts
      *
      * @return array
      */
-    private function validateContactData(array $contactData)
+    private function validateContactData(array $contactData, $updateExistingContacts = false)
     {
         if (false === isset($contactData['ContactKey'])) {
             throw new InvalidConfigurationException('Missing "ContactKey" parameter.');
-        } 
+        }  
         
         $validatedContactData = [];
         foreach($contactData as $key => $value) {
             if(!empty($value)) {
                 $validatedContactData[$key] = $value;
             }
-        }       
-        
+        }
         $validatedContactData['ContactKey'] = $this->validateContactKey($contactData['ContactKey']);
+        $validatedContactData['CustomAttributes'] = $this->validateContactCustomerFields($contactData);
 
-        $validatedContactData['Status'] = isset($contactData['Status']) ? $this->validateStatus($contactData['Status']) : null;
-
-        $validatedContactData['MailFormat'] = isset($contactData['MailFormat']) ? $this->validateFormat($contactData['MailFormat']) : null;
-
-        $validatedContactData['IsTestContact'] = isset($contactData['IsTestContact']) ? (bool)$contactData['IsTestContact'] : null;
-
-        if (true === isset($contactData['CustomAttributes'])) {
-            $customAttributes = [];
-
-            foreach ($contactData['CustomAttributes'] as $customAttributeId => $customAttributeValue) {
-                $customAttributes[] = new CustomAttribute(
-                    $customAttributeId,
-                    empty($customAttributeValue),
-                    empty($customAttributeValue) ? null : $customAttributeValue
-                );
-            }
-
-            $validatedContactData['CustomAttributes'] = $customAttributes;
+        return $this->validateRequiredFields($validatedContactData, $updateExistingContacts);
+    }
+    
+    /**
+     * Validate the custom field 'exid'
+     * 
+     * @param array $contactData
+     * @return array
+     */
+    public function validateContactCustomerFields(array $contactData) 
+    {
+        $customAttribute = []; 
+        if(isset($contactData['exid'])) {    
+            $customAttribute = [
+                    "CustomAttribute" => [ "Id" => 7353712, "value" => $contactData['exid'] ]
+            ];   
+        }    
+        return $customAttribute;
+    }
+    
+    /**
+     * validate required contact fields for insert|update
+     * 
+     * @param array $validatedContactData
+     * @param boolean $updateExistingContacts
+     * @return array
+     */
+    public function validateRequiredFields(array $validatedContactData, $updateExistingContacts = false)
+    {        
+        if(!$updateExistingContacts) {
+            return $this->validateInsertContactRequiredFields($validatedContactData);
+        }  
+        
+        if(isset($validatedContactData['Status'])) {
+            $validatedContactData['Status'] = $this->validateStatus($validatedContactData['Status']);
         }
-
-        if (true === isset($contactData['AddToGroup'])) {
-            $validatedContactData['AddToGroup'] = $contactData['AddToGroup'];
+        
+        if(isset($validatedContactData['MailFormat'])) {
+            $validatedContactData['MailFormat'] = $this->validateFormat($validatedContactData['MailFormat']);
         }
-
-        if (true === isset($contactData['RemoveFromGroup'])) {
-            $validatedContactData['RemoveFromGroup'] = $contactData['RemoveFromGroup'];
+        
+        if(isset($validatedContactData['IsTestContact'])) {
+            $validatedContactData['IsTestContact'] = (bool)$validatedContactData['IsTestContact'];
         }
-
+        
         return $validatedContactData;
+    }
+    
+    /**
+     * Validate and set defaults if empty for required contact fields
+     * 
+     * @param array $validatedContactData
+     * @return array
+     */
+    public function validateInsertContactRequiredFields(array $validatedContactData)
+    {
+        $validatedContactData['Status'] = isset($validatedContactData['Status']) ? $this->validateStatus($validatedContactData['Status']) : 'Pending';
+        $validatedContactData['MailFormat'] = isset($validatedContactData['MailFormat']) ? $this->validateFormat($validatedContactData['MailFormat']) : 'Both';
+        $validatedContactData['IsTestContact'] = isset($validatedContactData['IsTestContact']) ? (bool)$validatedContactData['IsTestContact'] : false;   
+        return $validatedContactData; 
     }
 
     /**
