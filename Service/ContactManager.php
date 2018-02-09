@@ -516,11 +516,11 @@ class ContactManager extends AbstractSoapClient
      * @return array
      */
     public function validateContactCustomerFields(array $contactData) 
-    {
+    {     
         $customAttribute = []; 
         if(isset($contactData['exid'])) {    
             $customAttribute = [
-                    "CustomAttribute" => [ "Id" => 7353712, "value" => $contactData['exid'] ]
+                "CustomAttribute" => [ "Id" => 7254031, "value" => $contactData['exid'] ]
             ];   
         }    
         return $customAttribute;
@@ -534,7 +534,9 @@ class ContactManager extends AbstractSoapClient
      * @return array
      */
     public function validateRequiredFields(array $validatedContactData, $updateExistingContacts = false)
-    {        
+    { 
+        $validatedContactData['IsTestContact'] = isset($validatedContactData['IsTestContact']) ? true : false; 
+        
         if(!$updateExistingContacts) {
             return $this->validateInsertContactRequiredFields($validatedContactData);
         }  
@@ -546,11 +548,7 @@ class ContactManager extends AbstractSoapClient
         if(isset($validatedContactData['MailFormat'])) {
             $validatedContactData['MailFormat'] = $this->validateFormat($validatedContactData['MailFormat']);
         }
-        
-        if(isset($validatedContactData['IsTestContact'])) {
-            $validatedContactData['IsTestContact'] = (bool)$validatedContactData['IsTestContact'];
-        }
-        
+
         return $validatedContactData;
     }
     
@@ -562,9 +560,13 @@ class ContactManager extends AbstractSoapClient
      */
     public function validateInsertContactRequiredFields(array $validatedContactData)
     {
+        if (!isset($validatedContactData['EmailAddress'])) {
+            throw new InvalidConfigurationException('Missing "EmailAddress" parameter.');
+        } 
+        
         $validatedContactData['Status'] = isset($validatedContactData['Status']) ? $this->validateStatus($validatedContactData['Status']) : 'Pending';
-        $validatedContactData['MailFormat'] = isset($validatedContactData['MailFormat']) ? $this->validateFormat($validatedContactData['MailFormat']) : 'Both';
-        $validatedContactData['IsTestContact'] = isset($validatedContactData['IsTestContact']) ? (bool)$validatedContactData['IsTestContact'] : false;   
+        $validatedContactData['MailFormat'] = isset($validatedContactData['MailFormat']) ? $this->validateFormat($validatedContactData['MailFormat']) : 'Both';  
+        
         return $validatedContactData; 
     }
 
