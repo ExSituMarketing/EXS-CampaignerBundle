@@ -195,7 +195,7 @@ class ContactManager extends AbstractSoapClient
         $parameters = [
             'UpdateExistingContacts' => $updateExistingContacts,
             'TriggerWorkflow' => $triggerWorkflow,
-            'contacts' => $this->ImmediateUploadMultipleContactsValidation($contacts, $updateExistingContacts)
+            'contacts' => $this->ImmediateUploadContactsValidation($contacts, $updateExistingContacts)
         ];
 
         if (null !== $globalAddToGroup) {
@@ -216,12 +216,23 @@ class ContactManager extends AbstractSoapClient
      * @param bollean $updateExistingContacts
      * @return array
      */
-    public function ImmediateUploadMultipleContactsValidation(array $contacts, $updateExistingContacts = false)
+    public function ImmediateUploadContactsValidation(array $contacts, $updateExistingContacts = false)
     {       
         if(isset($contacts['ContactKey'])) {
             return [$this->validateContactData($contacts, $updateExistingContacts)];
         }
-        
+        return $this->ImmediateUploadMultipleContactsValidation($contacts, $updateExistingContacts);        
+    }
+
+    /**
+     * Validate multiple contacts
+     * 
+     * @param array $contacts
+     * @param boolean $updateExistingContacts
+     * @return array
+     */
+    public function ImmediateUploadMultipleContactsValidation(array $contacts, $updateExistingContacts = false)
+    {        
         $validContacts = [];
         foreach($contacts as $contact) {
             if(is_array($contact)) {
@@ -230,7 +241,7 @@ class ContactManager extends AbstractSoapClient
         }
         return $validContacts;        
     }
-
+    
     /**
      * The InitiateDoubleOptIn web method is used when requests to receive email campaigns are gathered by a custom application or interface, instead of a Campaigner® sign up form.
      *
@@ -497,33 +508,26 @@ class ContactManager extends AbstractSoapClient
             throw new InvalidConfigurationException('Missing "ContactKey" parameter.');
         }  
         
-        $validatedContactData = [];
-        foreach($contactData as $key => $value) {
-            if(!empty($value)) {
-                $validatedContactData[$key] = $value;
-            }
-        }
+        $validatedContactData = $contactData;
         $validatedContactData['ContactKey'] = $this->validateContactKey($contactData['ContactKey']);
         $validatedContactData['CustomAttributes'] = $this->validateContactCustomerFields($contactData);
-
         return $this->validateRequiredFields($validatedContactData, $updateExistingContacts);
     }
     
     /**
-     * Validate the custom field 'exid'
+     * Validate the custom fields
      * 
      * @param array $contactData
      * @return array
      */
     public function validateContactCustomerFields(array $contactData) 
-    {     
-        $customAttribute = []; 
-        if(isset($contactData['exid'])) {    
-            $customAttribute = [
-                "CustomAttribute" => [ "Id" => 7254031, "value" => $contactData['exid'] ]
-            ];   
+    {
+        if(isset($contactData['CustomAttributes']['CustomAttribute']) 
+            && is_array($contactData['CustomAttributes']['CustomAttribute']) 
+            && count($contactData['CustomAttributes']['CustomAttribute']) > 0) {
+                return $contactData['CustomAttributes'];            
         }    
-        return $customAttribute;
+        return null;
     }
     
     /**
