@@ -348,7 +348,7 @@ class ContactManager extends AbstractSoapClient
     public function ResubscribeContact($contactId, $contactUniqueIdentifier, $status)
     {
         return $this->callMethod(__FUNCTION__, [
-            'contactKey' => $this->validateContactKeys([
+            'contactKey' => $this->validateContactKey([
                 'ContactId' => $contactId,
                 'ContactUniqueIdentifier' => $contactUniqueIdentifier,
             ]),
