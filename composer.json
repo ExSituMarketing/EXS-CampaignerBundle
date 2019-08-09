@@ -15,6 +15,7 @@
     ],
     "require": {
         "php": ">=7.2",
+        "ext-soap": "*",
         "symfony/symfony": "3.4.*",
         "symfony/framework-bundle": "~3.4"
     },
